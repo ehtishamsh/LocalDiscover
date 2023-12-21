@@ -8,13 +8,20 @@ const app = express();
 //     res.redirect("/users");
 //   }
 // });
-app.set("view engine", "ejs");
-app.get("/", function (req, res) {
-  res.render("index");
-});
 
+app.use((req, res, next) => {
+  res.status(400).json({
+    status: "fail",
+  });
+});
+app.get("/restaurants", function (req, res) {
+  res.status(200).send({
+    name: "Ehtisham",
+    location: "Lahore",
+  });
+});
 app.get("/profile", (req, res) => {
-  res.render("profile");
+  res.send(`<h1>Hello</h1>`);
 });
 app.get("/users", (req, res) => {
   res.send(`<h1>Hello</h1>`);
