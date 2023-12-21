@@ -1,27 +1,24 @@
-require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
+
+// app.use((req, res, next) => {
+//   if (req.path === "/users/ehtisham") {
+//     next();
+//   } else {
+//     res.redirect("/users");
+//   }
+// });
+app.set("view engine", "ejs");
+app.get("/", function (req, res) {
+  res.render("index");
 });
 
-//Get All restaurants
-app.get("/api/v1/restaurants", (req, res) => {
-  res.status(200).json({
-    status: "Success",
-    data: {
-      restaurants: ["Mcdonalds", "KFC"],
-    },
-  });
+app.get("/profile", (req, res) => {
+  res.render("profile");
 });
-//Get restaurant
-app.get("/api/v1/restaurants/:id", (req, res) => {
-  console.log(req.params);
+app.get("/users", (req, res) => {
+  res.send(`<h1>Hello</h1>`);
 });
-
-// Create a new restaurant
-
-app.post("/api/v1/restaurants", (req, res) => {
-  console.log(req);
+app.listen(3000, () => {
+  console.log("listening on port 3000");
 });
