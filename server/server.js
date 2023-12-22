@@ -1,5 +1,10 @@
+require("dotenv").config();
 const express = require("express");
+const morgan = require("morgan");
+
 const app = express();
+const port = process.env.PORT;
+const db = require("./db/index.js");
 
 // app.use((req, res, next) => {
 //   if (req.path === "/users/ehtisham") {
@@ -8,24 +13,39 @@ const app = express();
 //     res.redirect("/users");
 //   }
 // });
+app.use(express.json());
 
-app.use((req, res, next) => {
-  res.status(400).json({
-    status: "fail",
-  });
-});
-app.get("/restaurants", function (req, res) {
+app.get("/restaurants", async function (req, res) {
+  const result = await db.query("select * from restaurants");
+  console.log(result);
   res.status(200).send({
     name: "Ehtisham",
     location: "Lahore",
   });
 });
-app.get("/profile", (req, res) => {
-  res.send(`<h1>Hello</h1>`);
+app.get("/restaurants/:id", function (req, res) {
+  res.status(201).send({
+    name: "Ehtisham",
+    location: "Lahore",
+  });
 });
-app.get("/users", (req, res) => {
-  res.send(`<h1>Hello</h1>`);
+app.post("/restaurants", (req, res) => {
+  res.status(201).send({
+    name: "Ehtisham",
+    location: "Lahore",
+  });
 });
-app.listen(3000, () => {
-  console.log("listening on port 3000");
+app.put("/restaurants/:id", (req, res) => {
+  res.status(201).send({
+    name: "Ehtisham",
+    location: "Lahore",
+  });
+});
+app.delete("/restaurants/:id", (req, res) => {
+  res.status(204).json({
+    status: "Sucesss",
+  });
+});
+app.listen(port || 3000, () => {
+  console.log(`listening on port ${port}`);
 });
