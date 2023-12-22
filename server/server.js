@@ -14,37 +14,85 @@ const db = require("./db/index.js");
 //   }
 // });
 app.use(express.json());
-
+//GET ALL
 app.get("/restaurants", async function (req, res) {
-  const result = await db.query("select * from restaurants");
-  console.log(result);
-  res.status(200).send({
-    name: "Ehtisham",
-    location: "Lahore",
-  });
+  try {
+    const result = await db.query("select * from restaurants");
+    res.status(200).json({
+      status: "Success",
+      results: result.rows.length,
+      data: result.rows,
+    });
+  } catch (err) {
+    console.log("ERROR");
+  }
 });
-app.get("/restaurants/:id", function (req, res) {
-  res.status(201).send({
-    name: "Ehtisham",
-    location: "Lahore",
-  });
+//GET 1
+app.get("/restaurants/:id", async function (req, res) {
+  try {
+    const result = await db.query("select * from restaurants where id= $1", [
+      req.params.id,
+    ]);
+    console.log(result);
+    res.status(201).json({
+      status: "Success",
+      results: result.rows.length,
+      data: result.rows,
+    });
+  } catch (error) {
+    console.log("ERROR");
+  }
 });
-app.post("/restaurants", (req, res) => {
-  res.status(201).send({
-    name: "Ehtisham",
-    location: "Lahore",
-  });
+
+//INSERT DATA
+app.post("/restaurants", async (req, res) => {
+  console.log(req.body);
+  try {
+    const result = await db.query(
+      "insert into restaurants (restaurant_name, price, location) values ($1, $2, $3) returning *",
+      [req.body.name, req.body.price, req.body.location]
+    );
+    console.log(result);
+    res.status(201).json({
+      status: "Success",
+      results: result.rows.length,
+      data: result.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
-app.put("/restaurants/:id", (req, res) => {
-  res.status(201).send({
-    name: "Ehtisham",
-    location: "Lahore",
-  });
+app.put("/restaurants/:id", async (req, res) => {
+  try {
+    const result = await db.query(
+      "UPDATE restaurants SET restaurant_name=$2, price=$3, location=$4 WHERE id=$1 RETURNING *",
+      [req.params.id, req.body.name, req.body.price, req.body.location]
+    );
+
+    res.status(201).json({
+      status: "Success",
+      results: result.rows.length,
+      data: result.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
-app.delete("/restaurants/:id", (req, res) => {
-  res.status(204).json({
-    status: "Sucesss",
-  });
+app.delete("/restaurants/:id", async (req, res) => {
+  try {
+    const result = await db.query(
+      "DELETE FROM restaurants WHERE id=$1 RETURNING *",
+      [req.params.id]
+    );
+
+    res.status(201).json({
+      status: "Success",
+      results: result.rows.length,
+      data: result.rows,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 app.listen(port || 3000, () => {
   console.log(`listening on port ${port}`);
