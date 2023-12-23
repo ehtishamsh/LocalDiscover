@@ -1,6 +1,6 @@
 import React from "react";
 
-function Addres() {
+function AddRestaurant() {
   return (
     <div className="w-full flex items-center  gap-8">
       <input
@@ -30,4 +30,4 @@ function Addres() {
   );
 }
 
-export default Addres;
+export default AddRestaurant;

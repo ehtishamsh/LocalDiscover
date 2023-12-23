@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
 const port = process.env.PORT;
@@ -14,6 +15,7 @@ const db = require("./db/index.js");
 //   }
 // });
 app.use(express.json());
+app.use(cors());
 //GET ALL
 app.get("/api/restaurants", async function (req, res) {
   try {
