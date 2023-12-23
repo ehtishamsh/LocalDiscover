@@ -1,6 +1,7 @@
 import React from "react";
 import Addres from "./AddRestaurant";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Home() {
   return (

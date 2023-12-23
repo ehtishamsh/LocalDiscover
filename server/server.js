@@ -15,7 +15,7 @@ const db = require("./db/index.js");
 // });
 app.use(express.json());
 //GET ALL
-app.get("/restaurants", async function (req, res) {
+app.get("/api/restaurants", async function (req, res) {
   try {
     const result = await db.query("select * from restaurants");
     res.status(200).json({
@@ -28,7 +28,7 @@ app.get("/restaurants", async function (req, res) {
   }
 });
 //GET 1
-app.get("/restaurants/:id", async function (req, res) {
+app.get("/api/restaurants/:id", async function (req, res) {
   try {
     const result = await db.query("select * from restaurants where id= $1", [
       req.params.id,
@@ -45,7 +45,7 @@ app.get("/restaurants/:id", async function (req, res) {
 });
 
 //INSERT DATA
-app.post("/restaurants", async (req, res) => {
+app.post("/api/restaurants", async (req, res) => {
   console.log(req.body);
   try {
     const result = await db.query(
@@ -62,7 +62,7 @@ app.post("/restaurants", async (req, res) => {
     console.log(error);
   }
 });
-app.put("/restaurants/:id", async (req, res) => {
+app.put("/api/restaurants/:id", async (req, res) => {
   try {
     const result = await db.query(
       "UPDATE restaurants SET restaurant_name=$2, price=$3, location=$4 WHERE id=$1 RETURNING *",
@@ -78,7 +78,7 @@ app.put("/restaurants/:id", async (req, res) => {
     console.log(error);
   }
 });
-app.delete("/restaurants/:id", async (req, res) => {
+app.delete("/api/restaurants/:id", async (req, res) => {
   try {
     const result = await db.query(
       "DELETE FROM restaurants WHERE id=$1 RETURNING *",
