@@ -48,7 +48,6 @@ app.get("/api/restaurants/:id", async function (req, res) {
 
 //INSERT DATA
 app.post("/api/restaurants", async (req, res) => {
-  console.log(req.body);
   try {
     const result = await db.query(
       "insert into restaurants (restaurant_name, price, location) values ($1, $2, $3) returning *",
