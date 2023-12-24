@@ -7,11 +7,12 @@ import { ContextProvider } from "./context/Context";
 function App() {
   return (
     <ContextProvider>
-      <div className="bg-gray-900 w-full h-screen flex items-center justify-center">
+      <div className="bg-gray-900 w-full h-full py-16 flex items-center justify-center">
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="restaurant/:id" element={<Details />} />
+
             <Route path="restaurant/u/:id" element={<Update />} />
           </Routes>
         </Router>

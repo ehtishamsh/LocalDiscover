@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import AllRes from "./AllRes";
 import { RestaurantContext } from "../context/Context";
-import axios from "axios";
 
 function AddRestaurant() {
   const { restaurants, setRestaurant } = useContext(RestaurantContext);
@@ -29,13 +28,17 @@ function AddRestaurant() {
       }
     };
     e.preventDefault();
-    if (select === "- Price -") {
+    if (select === "- Price -" || select === "") {
       alert("Please Select Price");
     } else {
       if (name === "" || location === "") {
         alert("Please fill out all inputs fields");
       } else {
         insetDatas();
+        setName("");
+        setLocation("");
+        setSelect("");
+        alert("Data Added");
       }
     }
   }
