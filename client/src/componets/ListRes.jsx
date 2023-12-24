@@ -6,15 +6,12 @@ import AllRes from "./AllRes";
 function ListRes(props) {
   const navigate = useNavigate();
   const { restaurants, setRestaurant } = useContext(RestaurantContext);
-  const [loading, setLoading] = useState(false);
   const [modal, setModel] = useState(false);
   useEffect(() => {
-    setLoading(true);
     const fetchData = async () => {
       try {
         const fetchAllData = await AllRestaurants.get("/");
         setRestaurant(await fetchAllData.data.data);
-        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -44,22 +41,33 @@ function ListRes(props) {
   const list = restaurants.map((item) => {
     return (
       <tr
-        onClick={(e) => handleClick(item.id)}
         key={item.id}
         className="bg-white border-4 border-gray-200 hover:bg-gray-200 transition-all duration-300"
       >
-        <td className="px-16 py-2 text-center">
+        <td
+          className="px-16 py-2 text-center cursor-pointer "
+          onClick={(e) => handleClick(item.id)}
+        >
           <span className="text-center font-semibold">
             {item.restaurant_name}
           </span>
         </td>
-        <td className="px-16 py-2 text-center">
+        <td
+          className="px-16 py-2 text-center cursor-pointer "
+          onClick={(e) => handleClick(item.id)}
+        >
           <span>{item.location}</span>
         </td>
-        <td className="px-16 py-2 text-center">
+        <td
+          className="px-16 py-2 text-center cursor-pointer "
+          onClick={(e) => handleClick(item.id)}
+        >
           <span>{item.price}</span>
         </td>
-        <td className="px-16 py-2 text-center">
+        <td
+          className="px-16 py-2 text-center cursor-pointer "
+          onClick={(e) => handleClick(item.id)}
+        >
           <span>10:00</span>
         </td>
 

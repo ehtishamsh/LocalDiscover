@@ -10,7 +10,11 @@ function Addreview() {
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const date = new Date().toLocaleDateString().replace("/", "-");
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  const formattedDate = `${year}-${month}-${day}`;
   function handleSubmit(e) {
     const insetDatas = async () => {
       try {
@@ -18,7 +22,7 @@ function Addreview() {
           username: name,
           rating: rating,
           comment: comment,
-          reviews_date: date,
+          reviews_date: formattedDate,
         }).then(async (res) => {
           try {
             const fetchData = await AllRes.get(`/rev/${id}`);
@@ -39,7 +43,6 @@ function Addreview() {
       insetDatas();
       setName("");
       setComment("");
-      alert("Data Added");
     }
   }
 

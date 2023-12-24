@@ -94,14 +94,14 @@ app.delete("/api/restaurants/:id", async (req, res) => {
   }
 });
 //Get reviews
-app.get("/api/restaurants/rev/:id", (req, res) => {
+app.get("/api/restaurants/rev/:id", async (req, res) => {
   try {
-    const dbQ = db.query("SELECT * FROM reviews WHERE restaurant_id= $1", [
+    const dbQ = await db.query("SELECT * FROM reviews WHERE restaurant_id=$1", [
       req.params.id,
     ]);
     res.status(201).json({
       status: "Success",
-      data: dbQ,
+      data: dbQ.rows,
     });
   } catch (error) {
     console.log(error);
